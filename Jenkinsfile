@@ -35,5 +35,13 @@ pipeline {
                 }
             }
         }
+        stage('Deploy image') {
+            steps {
+                bat """
+                    docker rm -f tp4 2>nul
+                    docker run -d --name tp4 -p 8081:80 ${registry}:${BUILD_NUMBER}
+                """
+            }
+        }
     }
 }
